@@ -4,7 +4,12 @@ A reactive RESTful API for playing Blackjack, built with **Spring Boot WebFlux**
 
 [![Java Version](https://img.shields.io/badge/Java-21-blue.svg)](https://jdk.java.net/21/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Spring WebFlux](https://img.shields.io/badge/Spring%20WebFlux-Reactive-green.svg)](https://spring.io/projects/spring-webflux)
 [![Maven](https://img.shields.io/badge/Maven-3.8+-orange.svg)](https://maven.apache.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-7.0+-green.svg)](https://www.mongodb.com/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue.svg)](https://www.mysql.com/)
+[![R2DBC](https://img.shields.io/badge/R2DBC-Reactive-red.svg)](https://r2dbc.io/)
+[![Docker](https://img.shields.io/badge/Docker-24.0+-blue.svg)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
@@ -97,3 +102,19 @@ Before you begin, ensure you have the following installed:
 ```bash
 git clone https://github.com/ecanf/blackjack-game.git
 cd blackjack-game
+```
+
+---
+
+## 🤝 Contributing
+This is an educational project for learning DDD, Hexagonal Architecture, and Reactive Programming. Suggestions and improvements are welcome!
+
+---
+
+## 📝 License
+This project is for educational purposes.
+
+---
+
+## ‍💻 Author
+Eduard Cantos Font
