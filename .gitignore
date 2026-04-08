@@ -1,0 +1,234 @@
+# ============================================
+# Java compilation and build
+# ============================================
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.log
+*.iml
+*.lock
+*.jar.original
+target/
+classes/
+build/
+out/
+
+# ============================================
+# Maven
+# ============================================
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# ============================================
+# Spring Boot / WebFlux
+# ============================================
+application-local.properties
+application-dev.properties
+application-staging.properties
+application-*.yml
+!application-example.yml
+springboot-config.json
+*.spring
+.required
+
+# ============================================
+# IntelliJ IDEA
+# ============================================
+.idea/
+*.iws
+*.ipr
+*.iml
+.idea_modules/
+.idea/compiler.xml
+.idea/jarRepositories.xml
+.idea/workspace.xml
+.idea/shelf/
+.idea/httpRequests/
+.idea/dataSources.local.xml
+.idea/dataSources/
+.idea/sqldialects.xml
+.idea/misc.xml
+.idea/vcs.xml
+.idea/uiDesigner.xml
+.idea/gradle.xml
+.idea/libraries/
+.idea/caches/
+.idea/modules.xml
+.idea/runConfigurations/
+out/
+production/
+
+# ============================================
+# Docker
+# ============================================
+*.pid
+.dockerignore
+Dockerfile
+docker-compose*.yml
+!docker-compose-example.yml
+.docker/
+docker-volumes/
+**/data/
+**/dump/
+
+# ============================================
+# MongoDB local data
+# ============================================
+data/
+db/
+mongodb-data/
+dump/
+*.dump
+*.bson
+*.json
+
+# ============================================
+# MySQL local data
+# ============================================
+*.sql
+*.sql.gz
+*.my.cnf
+*.pid
+*.sock
+mysql-data/
+mysqldata/
+**.sqlite
+**.db
+
+# ============================================
+# Redis (caching)
+# ============================================
+dump.rdb
+appendonly.aof
+redis-data/
+*.rdb
+*.aof
+
+# ============================================
+# Environment and secrets
+# ============================================
+.env
+.env.local
+.env.production
+.secrets
+.secrets.*
+application-secrets.yml
+application-secrets.properties
+*.key
+*.pem
+*.crt
+*.p12
+*.jks
+**/certificates/
+
+# ============================================
+# Git and GitHub
+# ============================================
+.git/
+.gitignore
+.gitattributes
+.gitmodules
+.gitkeep
+.gitconfig
+.github/
+!.github/workflows/
+!.github/dependabot.yml
+!.github/pull_request_template.md
+
+# ============================================
+# Operating system files
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.swp
+*.swo
+*~
+~$*
+*.tmp
+temp/
+*.cache
+
+# ============================================
+# Logs and monitoring
+# ============================================
+logs/
+*.log
+log/
+**.log
+**.gz
+**.trace
+**.dump
+.hprof
+**.hprof
+
+# ============================================
+# Testing and coverage
+# ============================================
+test-output/
+surefire-reports/
+failsafe-reports/
+target/surefire-reports/
+target/failsafe-reports/
+coverage/
+*.exec
+**.html
+**.xml
+**.jacoco
+test-logs/
+
+# ============================================
+# Documentation generated
+# ============================================
+docs/api/
+docs/generated/
+site/
+apidocs/
+javadoc/
+**/javadoc/
+
+# ============================================
+# Spring Boot Actuator
+# ============================================
+spring-actuator.log
+actuator.log
+health.log
+metrics.log
+
+# ============================================
+# Temporary and cache files
+# ============================================
+.cache/
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*~
+
+# ============================================
+# Native compiled images
+# ============================================
+*.so
+*.dll
+*.dylib
+native-image/
+META-INF/native-image/
