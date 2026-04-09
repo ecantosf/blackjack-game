@@ -1,0 +1,75 @@
+spring:
+  profiles:
+    active: dev
+
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/blackjack}
+      database: blackjack
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+  r2dbc:
+    url: ${MYSQL_URL:r2dbc:mysql://localhost:3306/blackjack}
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:secret}
+    pool:
+      initial-size: 10
+      max-size: 20
+      validation-query: SELECT 1
+
+  cache:
+    type: redis
+    cache-names: ranking,player
+    redis:
+      time-to-live: 60000
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+logging:
+  level:
+    cat.opteams.blackjack: DEBUG
+    org.springframework.data.r2dbc: DEBUG
+    org.springframework.data.mongodb: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/blackjack
+    redis:
+      host: redis
+      port: 6379
+
+  r2dbc:
+    url: r2dbc:mysql://mysql:3306/blackjack
+    username: blackjack_user
+    password: blackjack_pass
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/test_blackjack
+      database: test_blackjack
+    redis:
+      host: localhost
+      port: 6379
+
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/test_blackjack
+    username: root
+    password: test
