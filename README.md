@@ -64,20 +64,27 @@ This project implements a complete Blackjack game API with a reactive, non‑blo
 
 | Technology | Purpose |
 |------------|---------|
-| **Java 21** | Core programming language |
-| **Spring Boot 3.2+** | Application framework |
+| **Java 17** | Core programming language |
+| **Spring Boot 3.2.4** | Application framework |
 | **Spring WebFlux** | Reactive REST API |
 | **Project Reactor** | Reactive streams (Mono/Flux) |
 | **Spring Data Reactive MongoDB** | Reactive game state persistence |
 | **Spring Data R2DBC** | Reactive MySQL access for player data |
 | **MySQL 8.0** | Player ranking and statistics |
 | **MongoDB 7.0** | Game state storage |
-| **Redis** (optional) | Reactive caching |
-| **SpringDoc OpenAPI** | Swagger UI documentation |
+| **Redis Reactive** | Reactive caching for ranking queries |
+| **Spring Security** | CORS configuration and security headers |
+| **SpringDoc OpenAPI** | Swagger UI automatic API documentation |
 | **Lombok** | Boilerplate code reduction |
-| **Docker & Docker Compose** | Containerization and orchestration |
-| **JUnit 5 + Mockito** | Unit and integration testing |
-| **Maven** | Build automation |
+| **Docker & Docker Compose** | Containerization and multi-service orchestration |
+| **JUnit 5 + Mockito** | Unit testing with mocks |
+| **StepVerifier** | Reactive streams testing |
+| **Testcontainers** | Integration testing with real databases |
+| **Maven** | Build automation and dependency management |
+| **IntelliJ IDEA Community Edition** | Development IDE |
+| **Git & GitHub** | Version control and repository hosting |
+| **GitHub Actions** | CI/CD pipeline automation |
+| **Render.com** | Cloud deployment platform |
 
 ---
 
