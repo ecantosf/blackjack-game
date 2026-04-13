@@ -24,7 +24,24 @@ public final class Game {
         TIE
     }
 
-    private Game(
+    /**
+     * Main constructor.
+     * To create new games, use startNewGame().
+     * This constructor is public ONLY for reconstruction from persistence.
+     *
+     * @param id game identifier
+     * @param playerId player identifier
+     * @param bet bet amount
+     * @param playerHand player's hand
+     * @param dealerHand dealer's hand
+     * @param status game status
+     * @param winner winner (can be null if not finished)
+     * @param createdAt creation date
+     * @param finishedAt finish date (can be null)
+     * @throws IllegalArgumentException if any required field is null
+     */
+
+    public Game(
             GameId id,
             PlayerId playerId,
             Money bet,
@@ -35,6 +52,25 @@ public final class Game {
             LocalDateTime createdAt,
             LocalDateTime finishedAt
     ) {
+        if (id == null) {
+            throw new IllegalArgumentException("GameId cannot be null");
+        }
+        if (playerId == null) {
+            throw new IllegalArgumentException("PlayerId cannot be null");
+        }
+        if (bet == null) {
+            throw new IllegalArgumentException("Bet cannot be null");
+        }
+        if (playerHand == null) {
+            throw new IllegalArgumentException("Player hand cannot be null");
+        }
+        if (dealerHand == null) {
+            throw new IllegalArgumentException("Dealer hand cannot be null");
+        }
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null");
+        }
+
         this.id = id;
         this.playerId = playerId;
         this.bet = bet;
