@@ -11,7 +11,7 @@ spring:
       port: ${REDIS_PORT:6379}
 
   r2dbc:
-    url: ${MYSQL_URL:r2dbc:mysql://localhost:3306/blackjack}
+    url: ${MYSQL_URL:r2dbc:mysql://localhost:3307/blackjack}
     username: ${MYSQL_USER:root}
     password: ${MYSQL_PASSWORD:secret}
     pool:
