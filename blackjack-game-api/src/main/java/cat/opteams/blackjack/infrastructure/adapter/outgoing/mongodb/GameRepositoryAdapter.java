@@ -41,7 +41,7 @@ public class GameRepositoryAdapter implements GameRepositoryPort {
 
         String idAsString = id.getValue().toString();
         log.debug("Finding game by id: {}", idAsString);
-        
+
         return reactiveRepository.findById(idAsString)
                 .flatMap(document -> {
                     try {
