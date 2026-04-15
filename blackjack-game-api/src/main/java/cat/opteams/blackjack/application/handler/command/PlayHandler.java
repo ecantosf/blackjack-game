@@ -11,6 +11,7 @@ import cat.opteams.blackjack.domain.model.valueobject.PlayerId;  // ← IMPORT A
 import cat.opteams.blackjack.domain.port.outgoing.DeckProviderPort;
 import cat.opteams.blackjack.domain.port.outgoing.GameRepositoryPort;
 import cat.opteams.blackjack.domain.port.outgoing.PlayerRepositoryPort;
+import cat.opteams.blackjack.shared.exception.GameAlreadyFinishedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -66,7 +67,7 @@ public class PlayHandler {
 
     private Mono<Game> handleStand(Game game) {
         if (game.isFinished()) {
-            return Mono.error(new IllegalStateException("Game is already finished"));
+            return Mono.error(new GameAlreadyFinishedException("Game is already finished"));
         }
 
         return deckProvider.getNewDeck()
