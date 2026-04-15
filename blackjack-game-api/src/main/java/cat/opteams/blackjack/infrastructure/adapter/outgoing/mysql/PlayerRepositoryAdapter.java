@@ -24,10 +24,20 @@ public class PlayerRepositoryAdapter implements PlayerRepositoryPort {
             return Mono.error(new IllegalArgumentException("Cannot save null player"));
         }
 
-        log.debug("Saving player with id: {}", player.getId().getValue());
+        String id = player.getId().getValue().toString();
+        log.debug("Saving player with id: {}", id);
 
-        return Mono.fromCallable(() -> mapper.toEntity(player))
-                .flatMap(r2dbcRepository::save)
+        return r2dbcRepository.findById(id)
+                .flatMap(existing -> {
+                    log.debug("Updating existing player with id: {}", id);
+                    PlayerEntity entity = mapper.toEntity(player);
+                    return r2dbcRepository.save(entity);
+                })
+                .switchIfEmpty(Mono.defer(() -> {
+                    log.debug("Creating new player with id: {}", id);
+                    PlayerEntity entity = mapper.toEntity(player);
+                    return r2dbcRepository.save(entity);
+                }))
                 .map(mapper::toDomain)
                 .doOnSuccess(saved -> log.debug("Player saved successfully: {}", saved.getId().getValue()))
                 .doOnError(error -> log.error("Error saving player: {}", error.getMessage()));
