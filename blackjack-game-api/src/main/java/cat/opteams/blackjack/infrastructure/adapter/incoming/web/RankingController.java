@@ -26,7 +26,7 @@ import reactor.core.publisher.Flux;
 public class RankingController {
 
     private final GetRankingQueryHandler getRankingQueryHandler;
-    
+
     @GetMapping
     @Operation(summary = "Get player ranking",
             description = "Retrieves the ranking of players based on total points")

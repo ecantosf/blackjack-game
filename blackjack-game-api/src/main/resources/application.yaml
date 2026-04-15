@@ -37,6 +37,22 @@ logging:
     org.springframework.data.r2dbc: DEBUG
     org.springframework.data.mongodb: DEBUG
 
+# CORS Configuration (amb valors per defecte)
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:4200,http://localhost:8080}
+  allowed-methods: ${CORS_ALLOWED_METHODS:GET,POST,PUT,DELETE,PATCH,OPTIONS}
+  max-age: ${CORS_MAX_AGE:3600}
+
+# Actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+
 ---
 spring:
   config:
@@ -54,6 +70,21 @@ spring:
     url: r2dbc:mysql://mysql:3306/blackjack
     username: blackjack_user
     password: blackjack_pass
+    pool:
+      initial-size: 10
+      max-size: 20
+      validation-query: SELECT 1
+
+  cache:
+    type: redis
+    cache-names: ranking,player
+    redis:
+      time-to-live: 60000
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:4200,http://localhost:8080}
+  allowed-methods: ${CORS_ALLOWED_METHODS:GET,POST,PUT,DELETE,PATCH,OPTIONS}
+  max-age: ${CORS_MAX_AGE:3600}
 
 ---
 spring:
@@ -66,10 +97,25 @@ spring:
       uri: mongodb://localhost:27017/test_blackjack
       database: test_blackjack
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
 
   r2dbc:
-    url: r2dbc:mysql://localhost:3306/test_blackjack
+    url: r2dbc:mysql://localhost:3307/test_blackjack
     username: root
     password: test
+    pool:
+      initial-size: 10
+      max-size: 20
+      validation-query: SELECT 1
+
+  cache:
+    type: redis
+    cache-names: ranking,player
+    redis:
+      time-to-live: 60000
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:4200,http://localhost:8080}
+  allowed-methods: ${CORS_ALLOWED_METHODS:GET,POST,PUT,DELETE,PATCH,OPTIONS}
+  max-age: ${CORS_MAX_AGE:3600}

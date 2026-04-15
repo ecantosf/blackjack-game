@@ -7,6 +7,7 @@ import cat.opteams.blackjack.application.validator.PlayCommandValidator;
 import cat.opteams.blackjack.domain.model.aggregate.Game;
 import cat.opteams.blackjack.domain.model.valueobject.Card;
 import cat.opteams.blackjack.domain.model.valueobject.GameId;
+import cat.opteams.blackjack.domain.model.valueobject.PlayerId;  // ← IMPORT AFEGIT
 import cat.opteams.blackjack.domain.port.outgoing.DeckProviderPort;
 import cat.opteams.blackjack.domain.port.outgoing.GameRepositoryPort;
 import cat.opteams.blackjack.domain.port.outgoing.PlayerRepositoryPort;
@@ -38,12 +39,8 @@ public class PlayHandler {
 
         return gameRepository.findById(gameId)
                 .switchIfEmpty(Mono.error(new IllegalArgumentException("Game not found: " + command.gameId())))
-                .flatMap(game -> playerRepository.findById(game.getPlayerId())
-                        .map(player -> new GameWithPlayerName(game, player.getName().getValue())))
-                .flatMap(context -> executeAction(context.game, command.action())
-                        .map(updatedGame -> new GameWithPlayerName(updatedGame, context.playerName())))
-                .flatMap(context -> gameRepository.save(context.game)
-                        .map(savedGame -> responseMapper.toResponse(savedGame, context.playerName())))
+                .flatMap(game -> executeAction(game, command.action())
+                        .flatMap(updatedGame -> saveGameAndUpdatePlayer(updatedGame, command)))
                 .doOnSuccess(response -> log.info("Play executed successfully for game: {}", response.id()))
                 .doOnError(error -> log.error("Error executing play: {}", error.getMessage()));
     }
@@ -74,7 +71,6 @@ public class PlayHandler {
 
         return deckProvider.getNewDeck()
                 .map(deck -> {
-                    // Dealer draws cards until 17 or higher using immutable Deck
                     List<Card> dealerCards = new ArrayList<>();
                     var currentDeck = deck;
                     var currentHand = game.getDealerHand();
@@ -90,5 +86,44 @@ public class PlayHandler {
                 });
     }
 
-    private record GameWithPlayerName(Game game, String playerName) {}
+    private Mono<GameResponse> saveGameAndUpdatePlayer(Game game, PlayCommand command) {
+        return gameRepository.save(game)
+                .flatMap(savedGame -> {
+                    if (!savedGame.isFinished()) {
+                        return getPlayerName(savedGame.getPlayerId())
+                                .map(playerName -> responseMapper.toResponse(savedGame, playerName));
+                    }
+
+                    return updatePlayerStats(savedGame)
+                            .then(getPlayerName(savedGame.getPlayerId()))
+                            .map(playerName -> responseMapper.toResponse(savedGame, playerName));
+                });
+    }
+
+    private Mono<Void> updatePlayerStats(Game game) {
+        return playerRepository.findById(game.getPlayerId())
+                .flatMap(player -> {
+                    int betAmount = game.getBet().getAmount().intValue();
+
+                    if (game.getWinner() == Game.Player.PLAYER) {
+                        log.debug("Player won! Adding win and {} points", betAmount);
+                        player.addWin(betAmount);
+                    } else if (game.getWinner() == Game.Player.DEALER) {
+                        log.debug("Player lost! Adding loss");
+                        player.addLoss();
+                    } else {
+                        log.debug("Game was a tie! No stats update needed");
+                        return Mono.empty();
+                    }
+
+                    return playerRepository.save(player).then();
+                })
+                .doOnSuccess(v -> log.debug("Player stats updated successfully for game: {}", game.getId().getValue()))
+                .doOnError(error -> log.error("Error updating player stats: {}", error.getMessage()));
+    }
+
+    private Mono<String> getPlayerName(PlayerId playerId) {
+        return playerRepository.findById(playerId)
+                .map(player -> player.getName().getValue());
+    }
 }
