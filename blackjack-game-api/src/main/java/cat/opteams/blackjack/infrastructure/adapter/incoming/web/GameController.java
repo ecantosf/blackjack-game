@@ -11,6 +11,8 @@ import cat.opteams.blackjack.application.mapper.GameResponse;
 import cat.opteams.blackjack.application.query.GetGameQuery;
 import cat.opteams.blackjack.infrastructure.adapter.incoming.web.dto.CreateGameRequest;
 import cat.opteams.blackjack.infrastructure.adapter.incoming.web.dto.PlayRequest;
+import cat.opteams.blackjack.shared.exception.ErrorResponse;
+import cat.opteams.blackjack.shared.exception.GameNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -126,5 +129,19 @@ public class GameController {
         return deleteGameHandler.handle(command)
                 .doOnSuccess(v -> log.info("Game deleted successfully: {}", id))
                 .doOnError(error -> log.error("Error deleting game: {}", error.getMessage()));
+    }
+
+    @ExceptionHandler(GameNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleGameNotFound(GameNotFoundException ex, ServerWebExchange exchange) {
+        log.warn("Game not found: {}", ex.getMessage());
+        return ErrorResponse.of(
+                HttpStatus.NOT_FOUND.value(),
+                "Game Not Found",
+                ex.getMessage(),
+                exchange.getRequest().getPath().value(),
+                "GAME_NOT_FOUND",
+                null
+        );
     }
 }

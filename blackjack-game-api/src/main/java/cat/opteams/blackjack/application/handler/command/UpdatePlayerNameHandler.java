@@ -7,6 +7,7 @@ import cat.opteams.blackjack.application.validator.UpdatePlayerNameValidator;
 import cat.opteams.blackjack.domain.model.valueobject.PlayerId;
 import cat.opteams.blackjack.domain.model.valueobject.PlayerName;
 import cat.opteams.blackjack.domain.port.outgoing.PlayerRepositoryPort;
+import cat.opteams.blackjack.shared.exception.DuplicatePlayerNameException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -34,7 +35,7 @@ public class UpdatePlayerNameHandler {
                 .flatMap(player -> playerRepository.existsByName(newName)
                         .flatMap(exists -> {
                             if (exists) {
-                                return Mono.error(new IllegalArgumentException("Player name already exists: " + command.newName()));
+                                return Mono.error(new DuplicatePlayerNameException(command.newName()));
                             }
                             return Mono.just(player);
                         }))
