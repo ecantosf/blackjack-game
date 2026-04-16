@@ -2,6 +2,7 @@ package cat.opteams.blackjack.domain.model.aggregate;
 
 import cat.opteams.blackjack.domain.model.valueobject.*;
 import cat.opteams.blackjack.domain.service.DrawResult;
+import cat.opteams.blackjack.shared.exception.GameAlreadyFinishedException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -126,7 +127,7 @@ public final class Game {
 
     public Game hit(Card card) {
         if (status != GameStatus.IN_PROGRESS) {
-            throw new IllegalStateException("Game is not in progress");
+            throw new GameAlreadyFinishedException("Game is not in progress");
         }
 
         Hand newPlayerHand = playerHand.addCard(card);
@@ -147,7 +148,7 @@ public final class Game {
 
     public Game stand(List<Card> dealerCards) {
         if (status != GameStatus.IN_PROGRESS) {
-            throw new IllegalStateException("Game is not in progress");
+            throw new GameAlreadyFinishedException("Game is not in progress");
         }
 
         Hand finalDealerHand = dealerHand;
