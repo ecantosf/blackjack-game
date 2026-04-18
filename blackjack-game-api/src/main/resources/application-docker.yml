@@ -1,0 +1,40 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
+      database: blackjack
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+
+  r2dbc:
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+    pool:
+      initial-size: 10
+      max-size: 20
+
+  cache:
+    type: redis
+    cache-names: ranking,player
+    redis:
+      time-to-live: 60000
+
+server:
+  port: 8080
+
+logging:
+  level:
+    cat.opteams.blackjack: INFO
+    org.springframework.data.r2dbc: WARN
+    org.springframework.data.mongodb: WARN
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
