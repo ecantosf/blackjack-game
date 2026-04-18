@@ -1,6 +1,7 @@
 # Blackjack Game API
 
-A reactive RESTful API for playing Blackjack, built with **Spring Boot WebFlux**, following **Domain-Driven Design (DDD)** and **Hexagonal Architecture** (Ports & Adapters).
+A reactive RESTful API for playing Blackjack, built with **Spring Boot WebFlux**, following 
+**Domain-Driven Design (DDD)** and **Hexagonal Architecture** (Ports & Adapters).
 
 [![Java Version](https://img.shields.io/badge/Java-21-blue.svg)](https://jdk.java.net/21/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
@@ -28,9 +29,49 @@ A reactive RESTful API for playing Blackjack, built with **Spring Boot WebFlux**
 
 ---
 
+## 🛠 Technologies
+
+| Technology | Purpose |
+|------------|---------|
+| **Java 21** | Core language |
+| **Spring Boot 3.2.4** | Application framework |
+| **Spring WebFlux** | Reactive REST API |
+| **Project Reactor** | Reactive streams (Mono/Flux) |
+| **MongoDB** | Game state storage (reactive) |
+| **MySQL + R2DBC** | Player data & ranking (reactive) |
+| **Redis** (optional) | Reactive caching |
+| **SpringDoc OpenAPI** | Swagger UI documentation |
+| **Docker** | Containerization |
+| **JUnit 5 + Mockito** | Testing |
+
+---
+
+## 📦 Requirements
+
+- **JDK 21** (or later)
+- **Maven 3.8+**
+- **MongoDB 7.0+** (local or Docker)
+- **MySQL 8.0+** (local or Docker)
+- **Git** (for version control)
+- **IntelliJ IDEA** (recommended) or any Java IDE
+- **Docker & Docker Compose** (optional, for containerized databases)
+
+---
+
+## 📥 Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ecanf/blackjack-game.git
+cd blackjack-game
+```
+
+
 ## 🎯 Exercise Description
 
-This project implements a complete Blackjack game API with a reactive, non‑blocking architecture designed to handle multiple concurrent players efficiently.
+This project implements a complete Blackjack game API with a reactive, non‑blocking 
+architecture designed to handle multiple concurrent players efficiently.
 
 ### Core Features
 
@@ -54,30 +95,9 @@ This project implements a complete Blackjack game API with a reactive, non‑blo
 
 #### Additional Features
 - Input validation with meaningful error messages
-- Centralized error handling (@ControllerAdvice)
+- Centralized error handling (`@ControllerAdvice`)
 - Fully reactive, non‑blocking design with Project Reactor
 - Domain Events for asynchronous processing
-
----
-
-## 🛠 Technologies Used
-
-| Technology | Purpose |
-|------------|---------|
-| **Java 21** | Core programming language |
-| **Spring Boot 3.2+** | Application framework |
-| **Spring WebFlux** | Reactive REST API |
-| **Project Reactor** | Reactive streams (Mono/Flux) |
-| **Spring Data Reactive MongoDB** | Reactive game state persistence |
-| **Spring Data R2DBC** | Reactive MySQL access for player data |
-| **MySQL 8.0** | Player ranking and statistics |
-| **MongoDB 7.0** | Game state storage |
-| **Redis** (optional) | Reactive caching |
-| **SpringDoc OpenAPI** | Swagger UI documentation |
-| **Lombok** | Boilerplate code reduction |
-| **Docker & Docker Compose** | Containerization and orchestration |
-| **JUnit 5 + Mockito** | Unit and integration testing |
-| **Maven** | Build automation |
 
 ---
 
@@ -85,13 +105,7 @@ This project implements a complete Blackjack game API with a reactive, non‑blo
 
 Before you begin, ensure you have the following installed:
 
-- **JDK 21** (or later)
-- **Maven 3.8+**
-- **MongoDB 7.0+** (local or Docker)
-- **MySQL 8.0+** (local or Docker)
-- **Git** (for version control)
-- **IntelliJ IDEA** (recommended) or any Java IDE
-- **Docker & Docker Compose** (optional, for containerized databases)
+
 
 ---
 
@@ -99,22 +113,176 @@ Before you begin, ensure you have the following installed:
 
 ### 1. Clone the repository
 
-```bash
+```
 git clone https://github.com/ecanf/blackjack-game.git
 cd blackjack-game
 ```
 
+### 2. Start databases with Docker
+
+#### MongoDB
+```
+docker run -d --name mongodb-blackjack -p 27017:27017 mongo:7.0
+```
+
+#### MySQL
+```
+docker run -d --name mysql-blackjack -p 3306:3306 \
+  -e MYSQL_ROOT_PASSWORD=secret \
+  -e MYSQL_DATABASE=blackjack \
+  mysql:8.0
+```
+
+### 3. Build the project
+```
+mvn clean compile
+```
+
+### 4. Run locally
+
+```bash
+mvn spring-boot:run
+```
+
+### 5. Verify application is running
+
+```bash
+curl http://localhost:8080/actuator/health
+```
+
+### 6. Swagger UI
+
+Open your browser at: http://localhost:8080/swagger-ui.html
+
 ---
 
-## 🤝 Contributing
-This is an educational project for learning DDD, Hexagonal Architecture, and Reactive Programming. Suggestions and improvements are welcome!
+## 🏗 Architecture
+Hexagonal Architecture (Ports & Adapters)
+
+┌─────────────────────────────────────────────────────────────┐
+│                      INFRASTRUCTURE                         │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐          │
+│  │ Controller  │  │   MongoDB   │  │    MySQL    │          │
+│  │ (Incoming)  │  │  (Outgoing) │  │  (Outgoing) │          │
+│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘          │
+│         │                │                │                 │
+│         ▼                ▼                ▼                 │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │              APPLICATION LAYER                      │    │
+│  │         (Handlers: CreateGame, Play, etc.)          │    │
+│  └─────────────────────────┬───────────────────────────┘    │
+│                            │                                │
+│                            ▼                                │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │                  DOMAIN LAYER                       │    │
+│  │   Game (Aggregate) | Player (Entity) | Value Objects│    │
+│  └─────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────┘
+
+---
+
+## 📁 Package Structure
+
+src/main/java/cat/opteams/blackjack/
+├── application/           # Use cases
+│   ├── command/          # Input DTOs
+│   ├── handler/          # Command/Query handlers
+│   ├── mapper/           # Response mappers
+│   ├── query/            # Query DTOs
+│   └── validator/        # Fail-fast validation
+├── domain/               # Core business logic
+│   ├── event/            # Domain Events
+│   ├── model/            # Aggregates, Entities, Value Objects
+│   ├── port/outgoing/    # Interfaces (ports)
+│   └── service/          # Domain Services
+├── infrastructure/       # Adapters
+│   ├── adapter/
+│   │   ├── incoming/web/ # REST controllers
+│   │   └── outgoing/     # MongoDB, MySQL, Redis adapters
+│   ├── config/           # Security, CORS configuration
+│   └── filter/           # CorrelationIdFilter
+└── shared/               # Shared utilities
+    └── exception/        # Exception hierarchy
+
+---
+
+## 📁 Project Structure
+
+blackjack-game-api/
+├── src/
+│   ├── main/
+│   │   ├── java/cat/opteams/blackjack/
+│   │   └── resources/
+│   │       └── application.yml
+│   └── test/
+│       └── java/cat/opteams/blackjack/
+│           ├── domain/
+│           ├── application/
+│           ├── infrastructure/
+│           ├── e2e/
+│           └── testutil/
+├── pom.xml
+├── README.md
+└── run-tests.sh / run-tests.bat
+
+---
+
+## 📚 API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/games` | Create a new game |
+| GET | `/games/{id}` | Get game details |
+| POST | `/games/{id}/play` | HIT or STAND action |
+| DELETE | `/games/{id}` | Delete a game |
+| PATCH | `/players/{playerId}/name` | Update player name |
+| GET | `/ranking` | Get player ranking |
+| GET | `/actuator/health` | Health check |
+
+---
+
+## 🧪 Testing
+
+### Test Status
+
+| Metric | Value |
+|--------|-------|
+| **Total tests** | 109 |
+| **Passing** | 105 (96.3%) |
+| **Known failures** | 4 (mock configuration issues) |
+
+### Coverage
+
+| Layer | Coverage | Target |
+|-------|----------|--------|
+| Domain | 98% | ≥ 95% ✅ |
+| Application | 94% | ≥ 90% ✅ |
+| Infrastructure | 87% | ≥ 80% ✅ |
+| **Overall** | **92%** | ≥ 85% ✅ |
+
+### Run tests
+
+```bash
+# All tests
+mvn test
+```
+
+#### Coverage report
+```mvn jacoco:report```
+#### Open: target/site/jacoco/index.html
 
 ---
 
 ## 📝 License
-This project is for educational purposes.
+This project is for educational purposes as part of an Advanced Spring Framework course.
 
 ---
 
-## ‍💻 Author
+## ‍👨‍💻 Author
 Eduard Cantos Font
+GitHub: @ecanf
+
+
+## 🤝 Contributing
+This is an educational project for learning DDD, Hexagonal Architecture, and Reactive Programming. 
+Suggestions and improvements are welcome!
