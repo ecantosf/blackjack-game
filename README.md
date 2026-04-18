@@ -108,8 +108,6 @@ Key Testing Practices
 
 ---
 
-<<<<<<< HEAD
-=======
 ## 🛠 Technologies Used
 
 | Technology | Purpose |
@@ -138,7 +136,6 @@ Key Testing Practices
 
 ---
 
->>>>>>> fb5f387 (docs(readme): update README with complete version from docs/readme)
 ## 📦 Requirements
 
 Before you begin, ensure you have the following installed:
