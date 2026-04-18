@@ -35,10 +35,9 @@ This project implements a complete Blackjack game API with a reactive, non‑blo
 ### Core Features
 
 #### Game Management
-- Create a new game session
-- Retrieve current game state
-- Execute game moves (HIT, STAND)
-- Delete game sessions
+- Create, retrieve, list, search, rename, and delete players
+- Ranking system sorted by win rate
+- Player statistics (games played, wins, losses, ties)
 
 #### Game Logic
 - Automatic bust detection
@@ -47,16 +46,24 @@ This project implements a complete Blackjack game API with a reactive, non‑blo
 - Score updates and game statistics
 - Ace value calculation (1 or 11)
 
-#### Player Management
-- Create, retrieve, list, search, rename, and delete players
-- Ranking system sorted by win rate
-- Player statistics (games played, wins, losses, ties)
-
 #### Additional Features
 - Input validation with meaningful error messages
 - Centralized error handling (@ControllerAdvice)
 - Fully reactive, non‑blocking design with Project Reactor
-- Domain Events for asynchronous processing
+- Domain Events for asynchron
+
+#### Testing
+Test Type	Coverage	Tools
+- Unit Tests: Domain & Application layers (JUnit 5, Mockito, AssertJ)
+- Integration Tests: Repositories & Controllers	Test (containers, WebTestClient)
+Architecture Tests	Hexagonal constraints	ArchUnit
+
+Key Testing Practices
+- Reactive Testing: StepVerifier for testing Mono/Flux streams
+- Testcontainers: Real MongoDB and MySQL containers for integration tests
+- Test Data Builders: GameTestBuilder, PlayerTestBuilder for flexible test data
+- Isolation: Each test runs with clean database state
+- Naming Convention: shouldDoSomethingWhenCondition() pattern
 
 ---
 
