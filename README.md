@@ -76,10 +76,9 @@ architecture designed to handle multiple concurrent players efficiently.
 ### Core Features
 
 #### Game Management
-- Create a new game session
-- Retrieve current game state
-- Execute game moves (HIT, STAND)
-- Delete game sessions
+- Create, retrieve, list, search, rename, and delete players
+- Ranking system sorted by win rate
+- Player statistics (games played, wins, losses, ties)
 
 #### Game Logic
 - Automatic bust detection
@@ -88,19 +87,58 @@ architecture designed to handle multiple concurrent players efficiently.
 - Score updates and game statistics
 - Ace value calculation (1 or 11)
 
-#### Player Management
-- Create, retrieve, list, search, rename, and delete players
-- Ranking system sorted by win rate
-- Player statistics (games played, wins, losses, ties)
-
 #### Additional Features
 - Input validation with meaningful error messages
 - Centralized error handling (`@ControllerAdvice`)
 - Fully reactive, non‑blocking design with Project Reactor
-- Domain Events for asynchronous processing
+- Domain Events for asynchron
+
+#### Testing
+Test Type	Coverage	Tools
+- Unit Tests: Domain & Application layers (JUnit 5, Mockito, AssertJ)
+- Integration Tests: Repositories & Controllers	Test (containers, WebTestClient)
+Architecture Tests	Hexagonal constraints	ArchUnit
+
+Key Testing Practices
+- Reactive Testing: StepVerifier for testing Mono/Flux streams
+- Testcontainers: Real MongoDB and MySQL containers for integration tests
+- Test Data Builders: GameTestBuilder, PlayerTestBuilder for flexible test data
+- Isolation: Each test runs with clean database state
+- Naming Convention: shouldDoSomethingWhenCondition() pattern
 
 ---
 
+<<<<<<< HEAD
+=======
+## 🛠 Technologies Used
+
+| Technology | Purpose |
+|------------|---------|
+| **Java 17** | Core programming language |
+| **Spring Boot 3.2.4** | Application framework |
+| **Spring WebFlux** | Reactive REST API |
+| **Project Reactor** | Reactive streams (Mono/Flux) |
+| **Spring Data Reactive MongoDB** | Reactive game state persistence |
+| **Spring Data R2DBC** | Reactive MySQL access for player data |
+| **MySQL 8.0** | Player ranking and statistics |
+| **MongoDB 7.0** | Game state storage |
+| **Redis Reactive** | Reactive caching for ranking queries |
+| **Spring Security** | CORS configuration and security headers |
+| **SpringDoc OpenAPI** | Swagger UI automatic API documentation |
+| **Lombok** | Boilerplate code reduction |
+| **Docker & Docker Compose** | Containerization and multi-service orchestration |
+| **JUnit 5 + Mockito** | Unit testing with mocks |
+| **StepVerifier** | Reactive streams testing |
+| **Testcontainers** | Integration testing with real databases |
+| **Maven** | Build automation and dependency management |
+| **IntelliJ IDEA Community Edition** | Development IDE |
+| **Git & GitHub** | Version control and repository hosting |
+| **GitHub Actions** | CI/CD pipeline automation |
+| **Render.com** | Cloud deployment platform |
+
+---
+
+>>>>>>> fb5f387 (docs(readme): update README with complete version from docs/readme)
 ## 📦 Requirements
 
 Before you begin, ensure you have the following installed:
