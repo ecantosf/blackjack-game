@@ -15,17 +15,35 @@ A reactive RESTful API for playing Blackjack, built with **Spring Boot WebFlux**
 
 ---
 
-## 📋 Table of Contents
+## 🎯 Exercise Description
 
-- [Exercise Description](#exercise-description)
-- [Technologies Used](#technologies-used)
-- [Requirements](#requirements)
-- [Installation Guide](#installation-guide)
-- [Execution Guide](#execution-guide)
-- [Deployment](#deployment)
-- [API Documentation](#api-documentation)
-- [Architecture](#architecture)
-- [Testing](#testing)
+This project implements a complete Blackjack game API with a reactive, non‑blocking architecture designed to handle multiple concurrent players efficiently.
+
+### Core Features
+
+#### Game Management
+- Create a new game session
+- Retrieve current game state
+- Execute game moves (HIT, STAND)
+- Delete game sessions
+
+#### Game Logic
+- Automatic bust detection
+- Dealer intelligent logic (stands on 17+)
+- Winner determination (Blackjack, Bust, Push)
+- Score updates and game statistics
+- Ace value calculation (1 or 11)
+
+#### Player Management
+- Create, retrieve, list, search, rename, and delete players
+- Ranking system sorted by win rate
+- Player statistics (games played, wins, losses, ties)
+
+#### Additional Features
+- Input validation with meaningful error messages
+- Centralized error handling (`@ControllerAdvice`)
+- Fully reactive, non‑blocking design with Project Reactor
+- Domain Events for asynchronous processing
 
 ---
 
@@ -58,92 +76,6 @@ A reactive RESTful API for playing Blackjack, built with **Spring Boot WebFlux**
 
 ---
 
-## 📥 Installation
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/ecanf/blackjack-game.git
-cd blackjack-game
-```
-
-
-## 🎯 Exercise Description
-
-This project implements a complete Blackjack game API with a reactive, non‑blocking 
-architecture designed to handle multiple concurrent players efficiently.
-
-### Core Features
-
-#### Game Management
-- Create, retrieve, list, search, rename, and delete players
-- Ranking system sorted by win rate
-- Player statistics (games played, wins, losses, ties)
-
-#### Game Logic
-- Automatic bust detection
-- Dealer intelligent logic (stands on 17+)
-- Winner determination (Blackjack, Bust, Push)
-- Score updates and game statistics
-- Ace value calculation (1 or 11)
-
-#### Additional Features
-- Input validation with meaningful error messages
-- Centralized error handling (`@ControllerAdvice`)
-- Fully reactive, non‑blocking design with Project Reactor
-- Domain Events for asynchron
-
-#### Testing
-Test Type	Coverage	Tools
-- Unit Tests: Domain & Application layers (JUnit 5, Mockito, AssertJ)
-- Integration Tests: Repositories & Controllers	Test (containers, WebTestClient)
-Architecture Tests	Hexagonal constraints	ArchUnit
-
-Key Testing Practices
-- Reactive Testing: StepVerifier for testing Mono/Flux streams
-- Testcontainers: Real MongoDB and MySQL containers for integration tests
-- Test Data Builders: GameTestBuilder, PlayerTestBuilder for flexible test data
-- Isolation: Each test runs with clean database state
-- Naming Convention: shouldDoSomethingWhenCondition() pattern
-
----
-
-## 🛠 Technologies Used
-
-| Technology | Purpose |
-|------------|---------|
-| **Java 17** | Core programming language |
-| **Spring Boot 3.2.4** | Application framework |
-| **Spring WebFlux** | Reactive REST API |
-| **Project Reactor** | Reactive streams (Mono/Flux) |
-| **Spring Data Reactive MongoDB** | Reactive game state persistence |
-| **Spring Data R2DBC** | Reactive MySQL access for player data |
-| **MySQL 8.0** | Player ranking and statistics |
-| **MongoDB 7.0** | Game state storage |
-| **Redis Reactive** | Reactive caching for ranking queries |
-| **Spring Security** | CORS configuration and security headers |
-| **SpringDoc OpenAPI** | Swagger UI automatic API documentation |
-| **Lombok** | Boilerplate code reduction |
-| **Docker & Docker Compose** | Containerization and multi-service orchestration |
-| **JUnit 5 + Mockito** | Unit testing with mocks |
-| **StepVerifier** | Reactive streams testing |
-| **Testcontainers** | Integration testing with real databases |
-| **Maven** | Build automation and dependency management |
-| **IntelliJ IDEA Community Edition** | Development IDE |
-| **Git & GitHub** | Version control and repository hosting |
-| **GitHub Actions** | CI/CD pipeline automation |
-| **Render.com** | Cloud deployment platform |
-
----
-
-## 📦 Requirements
-
-Before you begin, ensure you have the following installed:
-
-
-
----
-
 ## 📥 Installation Guide
 
 ### 1. Clone the repository
@@ -153,39 +85,25 @@ git clone https://github.com/ecanf/blackjack-game.git
 cd blackjack-game
 ```
 
-### 2. Start databases with Docker
-
-#### MongoDB
-```
-docker run -d --name mongodb-blackjack -p 27017:27017 mongo:7.0
-```
-
-#### MySQL
-```
-docker run -d --name mysql-blackjack -p 3306:3306 \
-  -e MYSQL_ROOT_PASSWORD=secret \
-  -e MYSQL_DATABASE=blackjack \
-  mysql:8.0
-```
-
-### 3. Build the project
-```
-mvn clean compile
-```
-
-### 4. Run locally
+### 2. Run with Docker Compose (recommended)
 
 ```bash
-mvn spring-boot:run
+docker-compose up -d --build
 ```
 
-### 5. Verify application is running
+This will start:
+- MongoDB on port 27017
+- MySQL on port 3307
+- Redis on port 6379
+- Blackjack API on port 8080
+
+### 3. Verify application is running
 
 ```bash
 curl http://localhost:8080/actuator/health
 ```
 
-### 6. Swagger UI
+### 4. Swagger UI
 
 Open your browser at: http://localhost:8080/swagger-ui.html
 
@@ -321,3 +239,4 @@ GitHub: @ecanf
 ## 🤝 Contributing
 This is an educational project for learning DDD, Hexagonal Architecture, and Reactive Programming. 
 Suggestions and improvements are welcome!
+
