@@ -109,28 +109,30 @@ Open your browser at: http://localhost:8080/swagger-ui.html
 
 ---
 
-## 🏗 Architecture
+```text
+🏗 Architecture
 Hexagonal Architecture (Ports & Adapters)
 
 ┌─────────────────────────────────────────────────────────────┐
-│                      INFRASTRUCTURE                         │
+│                       INFRASTRUCTURE                         │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐          │
-│  │ Controller  │  │   MongoDB   │  │    MySQL    │          │
-│  │ (Incoming)  │  │  (Outgoing) │  │  (Outgoing) │          │
+│  │ Controller  │  │  MongoDB    │  │   MySQL     │          │
+│  │ (Incoming)  │  │ (Outgoing)  │  │ (Outgoing)  │          │
 │  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘          │
-│         │                │                │                 │
-│         ▼                ▼                ▼                 │
-│  ┌─────────────────────────────────────────────────────┐    │
-│  │              APPLICATION LAYER                      │    │
-│  │         (Handlers: CreateGame, Play, etc.)          │    │
-│  └─────────────────────────┬───────────────────────────┘    │
-│                            │                                │
-│                            ▼                                │
-│  ┌─────────────────────────────────────────────────────┐    │
-│  │                  DOMAIN LAYER                       │    │
-│  │   Game (Aggregate) | Player (Entity) | Value Objects│    │
-│  └─────────────────────────────────────────────────────┘    │
+│         │                │                │                  │
+│         ▼                ▼                ▼                  │
+│  ┌─────────────────────────────────────────────────────┐     │
+│  │                 APPLICATION LAYER                    │     │
+│  │        (Handlers: CreateGame, Play, etc.)           │     │
+│  └─────────────────────────┬───────────────────────────┘     │
+│                            │                                  │
+│                            ▼                                  │
+│  ┌─────────────────────────────────────────────────────┐     │
+│  │                    DOMAIN LAYER                      │     │
+│  │  Game (Aggregate) | Player (Entity) | Value Objects │     │
+│  └─────────────────────────────────────────────────────┘     │
 └─────────────────────────────────────────────────────────────┘
+```
 
 ---
 
