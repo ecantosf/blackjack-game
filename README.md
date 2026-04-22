@@ -109,60 +109,91 @@ Open your browser at: http://localhost:8080/swagger-ui.html
 
 ---
 
-```text
 🏗 Architecture
 Hexagonal Architecture (Ports & Adapters)
-
+```text
 ┌─────────────────────────────────────────────────────────────┐
-│                       INFRASTRUCTURE                         │
+│                       INFRASTRUCTURE                        │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐          │
 │  │ Controller  │  │  MongoDB    │  │   MySQL     │          │
 │  │ (Incoming)  │  │ (Outgoing)  │  │ (Outgoing)  │          │
 │  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘          │
-│         │                │                │                  │
-│         ▼                ▼                ▼                  │
-│  ┌─────────────────────────────────────────────────────┐     │
-│  │                 APPLICATION LAYER                    │     │
-│  │        (Handlers: CreateGame, Play, etc.)           │     │
-│  └─────────────────────────┬───────────────────────────┘     │
-│                            │                                  │
-│                            ▼                                  │
-│  ┌─────────────────────────────────────────────────────┐     │
-│  │                    DOMAIN LAYER                      │     │
-│  │  Game (Aggregate) | Player (Entity) | Value Objects │     │
-│  └─────────────────────────────────────────────────────┘     │
+│         │                │                │                 │
+│         ▼                ▼                ▼                 │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │                 APPLICATION LAYER                   │    │
+│  │        (Handlers: CreateGame, Play, etc.)           │    │
+│  └─────────────────────────┬───────────────────────────┘    │
+│                            │                                │
+│                            ▼                                │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │                    DOMAIN LAYER                     │    │
+│  │  Game (Aggregate) | Player (Entity) | Value Objects │    │
+│  └─────────────────────────────────────────────────────┘    │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## 📁 Package Structure
-
+```text
 src/main/java/cat/opteams/blackjack/
-├── application/           # Use cases
-│   ├── command/          # Input DTOs
-│   ├── handler/          # Command/Query handlers
-│   ├── mapper/           # Response mappers
-│   ├── query/            # Query DTOs
-│   └── validator/        # Fail-fast validation
-├── domain/               # Core business logic
-│   ├── event/            # Domain Events
-│   ├── model/            # Aggregates, Entities, Value Objects
-│   ├── port/outgoing/    # Interfaces (ports)
-│   └── service/          # Domain Services
-├── infrastructure/       # Adapters
+│
+├── application/                    # Use cases
+│   ├── command/                    # Input DTOs
+│   ├── handler/                    # Command/Query handlers
+│   ├── mapper/                     # Response mappers
+│   ├── query/                      # Query DTOs
+│   └── validator/                  # Fail-fast validation
+│
+├── domain/                         # Core business logic
+│   ├── event/                      # Domain Events
+│   ├── model/                      # Aggregates, Entities, Value Objects
+│   ├── port/
+│   │   └── outgoing/               # Interfaces (ports)
+│   └── service/                    # Domain Services
+│
+├── infrastructure/                 # Adapters
 │   ├── adapter/
-│   │   ├── incoming/web/ # REST controllers
-│   │   └── outgoing/     # MongoDB, MySQL, Redis adapters
-│   ├── config/           # Security, CORS configuration
-│   └── filter/           # CorrelationIdFilter
-└── shared/               # Shared utilities
-    └── exception/        # Exception hierarchy
-
+│   │   ├── incoming/
+│   │   │   └── web/                # REST controllers
+│   │   └── outgoing/               # MongoDB, MySQL, Redis adapters
+│   ├── config/                     # Security, CORS configuration
+│   └── filter/                     # CorrelationIdFilter
+│
+└── shared/                         # Shared utilities
+    └── exception/                  # Exception hierarchy
+```
 ---
 
 ## 📁 Project Structure
-
+```text
+blackjack-game-api/
+│
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── cat/opteams/blackjack/
+│   │   │       ├── application/
+│   │   │       ├── domain/
+│   │   │       ├── infrastructure/
+│   │   │       └── shared/
+│   │   └── resources/
+│   │       └── application.yml
+│   │
+│   └── test/
+│       └── java/
+│           └── cat/opteams/blackjack/
+│               ├── domain/
+│               ├── application/
+│               ├── infrastructure/
+│               ├── e2e/
+│               └── testutil/
+│
+├── pom.xml
+├── README.md
+├── run-tests.sh      (Linux/Mac)
+└── run-tests.bat     (Windows)
 blackjack-game-api/
 ├── src/
 │   ├── main/
@@ -179,7 +210,7 @@ blackjack-game-api/
 ├── pom.xml
 ├── README.md
 └── run-tests.sh / run-tests.bat
-
+```
 ---
 
 ## 📚 API Endpoints
