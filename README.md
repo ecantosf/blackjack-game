@@ -3,6 +3,8 @@
 A reactive RESTful API for playing Blackjack, built with **Spring Boot WebFlux**, following 
 **Domain-Driven Design (DDD)** and **Hexagonal Architecture** (Ports & Adapters).
 
+[![Enllaç presentació Blackjack i Demo](https://img.shields.io/badge/📺-Watch_Demo-FF0000?style=for-the-badge&logo=loom)](https://www.loom.com/share/b5067a21f1804766aa9613af8eaf2ef9)
+
 [![Java Version](https://img.shields.io/badge/Java-21-blue.svg)](https://jdk.java.net/21/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Spring WebFlux](https://img.shields.io/badge/Spring%20WebFlux-Reactive-green.svg)](https://spring.io/projects/spring-webflux)
