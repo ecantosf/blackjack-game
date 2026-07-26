@@ -17,6 +17,12 @@ A reactive RESTful API for playing Blackjack, built with **Spring Boot WebFlux**
 
 ---
 
+## 🎥 Demo
+
+▶️ **[Watch the full walkthrough on Loom](https://www.loom.com/share/b5067a21f1804766aa9613af8eaf2ef9)** — end-to-end tour of the reactive API and game flow.
+
+---
+
 ## 🎯 Exercise Description
 
 This project implements a complete Blackjack game API with a reactive, non‑blocking architecture designed to handle multiple concurrent players efficiently.
