@@ -274,7 +274,7 @@ This project is for educational purposes as part of an Advanced Spring Framework
 
 ## ‍👨‍💻 Author
 Eduard Cantos Font
-GitHub: @ecanf
+GitHub: @ecantosf
 
 
 ## 🤝 Contributing
